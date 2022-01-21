@@ -42,6 +42,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9E393E48279AE3AD0020D759 /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				9EA99E5A2799F84D00C257E2 /* ContentView.swift */,
+				9E393E46279ADBA70020D759 /* ContentView-ViewModel.swift */,
+			);
+			path = ContentView;
+			sourceTree = "<group>";
+		};
 		9EA99E4C2799F84D00C257E2 = {
 			isa = PBXGroup;
 			children = (
@@ -62,8 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				9EA99E582799F84D00C257E2 /* NameReminderApp.swift */,
-				9EA99E5A2799F84D00C257E2 /* ContentView.swift */,
-				9E393E46279ADBA70020D759 /* ContentView-ViewModel.swift */,
+				9E393E48279AE3AD0020D759 /* ContentView */,
 				9EA99E70279A121B00C257E2 /* DetailView.swift */,
 				9EA99E6C279A072500C257E2 /* Person.swift */,
 				9EA99E6A279A06BF00C257E2 /* FileManager-DocumentsDirectory.swift */,

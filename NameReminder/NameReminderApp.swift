@@ -11,7 +11,7 @@ import SwiftUI
 struct NameReminderApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(jpegData: Data())
+            ContentView()
         }
     }
 }
