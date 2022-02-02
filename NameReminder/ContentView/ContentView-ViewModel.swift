@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+import MapKit
 
 extension ContentView {
     
@@ -21,12 +22,17 @@ extension ContentView {
         @Published var showingFilterSheet = false
         
         @Published var personName = ""
+        @Published var personLongitude = 0.0
+        @Published var personLatitude = 0.0
+
         
         @Published var people: [Person]
         
         @Published var jpegData = Data()
         
         let savePath = FileManager.documentsDirectory.appendingPathComponent("SavedPeople")
+        
+        let locationFetcher = LocationFetcher()
         
         init() {
             do {
@@ -46,17 +52,17 @@ extension ContentView {
         func createPerson(name: String) -> Person {
             if let inputImage = inputImage {
                 jpegData = inputImage.jpegData(compressionQuality: 0.8) ?? Data()
-                let newPerson = Person(id: UUID(), name: name, image: jpegData)
+                let newPerson = Person(id: UUID(), name: name, image: jpegData, longitude: personLongitude, latitude: personLatitude)
                 return newPerson
             }
-            return Person(id: UUID(), name: "", image: Data())
+            return Person(id: UUID(), name: "", image: Data(), longitude: 0.0, latitude: 0.0)
             
         }
         
         func save(name: String) {
             if let inputImage = inputImage {
                 let jpegData = inputImage.jpegData(compressionQuality: 0.8)
-                let newPerson = Person(id: UUID(), name: name, image: jpegData)
+                let newPerson = Person(id: UUID(), name: name, image: jpegData, longitude: personLongitude, latitude: personLatitude)
                 people.append(newPerson)
                 try? jpegData?.write(to: savePath, options: [.atomic, .completeFileProtection])
                 do {
@@ -64,6 +70,7 @@ extension ContentView {
                     try data.write(to: savePath, options: [.atomicWrite, .completeFileProtection])
                     personName = ""
                     image = nil
+                    print("Saved location: \(personLongitude), \(personLatitude)")
                 } catch {
                     print("Unable to save data.")
                 }

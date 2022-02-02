@@ -13,9 +13,31 @@ struct ContentView: View {
     
     @StateObject private var viewModel = ViewModel()
     
+    
     var body: some View {
         NavigationView {
             Form {
+                Section {
+                    Button {
+                        self.viewModel.locationFetcher.start()
+                    } label: {
+                        HStack {
+                            Image(systemName: "location.circle")
+                            Text("Start tracking location")
+                        }
+                    }
+                    
+                    Button("Read Location") {
+                        if let location = self.viewModel.locationFetcher.lastKnownLocation {
+                            print("Your location is \(location)")
+                            viewModel.personLatitude = location.latitude
+                            viewModel.personLongitude = location.longitude
+                        } else {
+                            print("Your location is unknown")
+                        }
+                    }
+                }
+                
                 Section(header: Text("Add a new person")) {
                     ZStack {
                         if let image = viewModel.image {
@@ -35,7 +57,7 @@ struct ContentView: View {
                 }
                 Section(header: Text("People")) {
                     ForEach(viewModel.people.sorted(), id: \.id) {
-                        NavigationLink($0.name, destination: DetailView(name: $0.name, data: $0.image ?? Data()))
+                        NavigationLink($0.name, destination: DetailView(name: $0.name, data: $0.image ?? Data(), longitude: $0.longitude ?? 0.0, latitude: $0.latitude ?? 0.0))
                     }
                 }
             }
